@@ -1,0 +1,22 @@
+version: '3.9'
+services:
+  web:
+    build: '.'
+    ports:
+      - "4000:4000"
+    volumes:
+      - /opt/app/assets/node_modules
+      - /opt/app/deps
+      - .:/opt/app
+    depends_on:
+      - db
+    environment:
+      MIX_ENV: 'dev'
+  db:
+    image: postgres:alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - ./db/:/var/lib/postgresql/data 
+    environment:
+        POSTGRES_HOST_AUTH_METHOD: trust
